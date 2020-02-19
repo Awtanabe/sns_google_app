@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /products
   # GET /products.json
   def index
@@ -69,6 +69,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:title, :desc, :user_id)
+      params.require(:product).permit(:title, :desc).merge(user_id: current_user.id)
     end
 end
